@@ -2,6 +2,7 @@ package edu.iis.mto.testreactor.exc2;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
 
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -38,6 +39,7 @@ public class WashingMachineTest {
         builderProgramConfiguration = builderProgramConfiguration.withSpin(true);
         programConfiguration = builderProgramConfiguration.build();
 
+        Mockito.when(dirtDetector.detectDirtDegree(any())).thenReturn(new Percentage(10));
     }
 
     @Test public void givenTooHeavyLaundryReturnLaundryStatusErrorObject() {
@@ -59,6 +61,13 @@ public class WashingMachineTest {
 
         assertThat(washingMachine.start(laundryBatch,programConfiguration), is(laundryStatus));
 
+    }
+
+    @Test public void givenProgramWithAutoDetectCastDirtDetectorMethodOnce() {
+        programConfiguration = builderProgramConfiguration.withProgram(Program.AUTODETECT).build();
+
+        washingMachine.start(laundryBatch,programConfiguration);
+        Mockito.verify(dirtDetector,Mockito.times(1)).detectDirtDegree(any());
     }
 
     @Test public void itCompiles() {
