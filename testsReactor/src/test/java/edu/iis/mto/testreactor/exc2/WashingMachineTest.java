@@ -77,6 +77,10 @@ public class WashingMachineTest {
         Mockito.verify(waterPump,Mockito.times(1)).release();
     }
 
+    @Test public void givenNotTooHeavyLaundryCastEngineRunWashingOnce() {
+        //TODO
+    }
+
     @Test public void itCompiles() {
         assertThat(true, Matchers.equalTo(true));
     }
