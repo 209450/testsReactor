@@ -7,6 +7,7 @@ import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 public class WashingMachineTest {
@@ -33,7 +34,7 @@ public class WashingMachineTest {
         laundryBatch = builderLaundryBatch.build();
 
         builderProgramConfiguration = ProgramConfiguration.builder();
-        builderProgramConfiguration = builderProgramConfiguration.withProgram(Program.AUTODETECT);
+        builderProgramConfiguration = builderProgramConfiguration.withProgram(Program.LONG);
         builderProgramConfiguration = builderProgramConfiguration.withSpin(true);
         programConfiguration = builderProgramConfiguration.build();
 
@@ -48,6 +49,16 @@ public class WashingMachineTest {
                                     .build();
 
         assertThat(washingMachine.start(laundryBatch,programConfiguration), is(laundryStatus));
+    }
+
+    @Test public void givenNotTooHeavyLaundryReturnSuccessLaundryStatus() {
+        laundryStatus = LaundryStatus.builder()
+                                     .withResult(Result.SUCCESS)
+                                     .withRunnedProgram(Program.LONG)
+                                     .build();
+
+        assertThat(washingMachine.start(laundryBatch,programConfiguration), is(laundryStatus));
+
     }
 
     @Test public void itCompiles() {
