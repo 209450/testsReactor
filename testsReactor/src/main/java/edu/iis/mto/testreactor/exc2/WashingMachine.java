@@ -72,4 +72,17 @@ public class WashingMachine {
                             .build();
     }
 
+    @Override public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        WashingMachine that = (WashingMachine) o;
+        return Objects.equals(dirtDetector, that.dirtDetector) && Objects.equals(engine, that.engine) && Objects.equals(waterPump,
+                that.waterPump);
+    }
+
+    @Override public int hashCode() {
+        return Objects.hash(dirtDetector, engine, waterPump);
+    }
 }
