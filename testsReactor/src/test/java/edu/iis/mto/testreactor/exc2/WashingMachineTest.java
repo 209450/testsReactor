@@ -70,6 +70,13 @@ public class WashingMachineTest {
         Mockito.verify(dirtDetector,Mockito.times(1)).detectDirtDegree(any());
     }
 
+    @Test public void givenNotTooHeavyLaundryCastWaterPumpMethodTwice() {
+        washingMachine.start(laundryBatch,programConfiguration);
+
+        Mockito.verify(waterPump,Mockito.times(1)).pour(1);
+        Mockito.verify(waterPump,Mockito.times(1)).release();
+    }
+
     @Test public void itCompiles() {
         assertThat(true, Matchers.equalTo(true));
     }
